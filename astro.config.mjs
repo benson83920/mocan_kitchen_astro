@@ -3,6 +3,6 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://mocan-kitchen.github.io',
-    base: '/mocan-kitchen-astro',
+    site: 'https://benson83920.github.io',
+    base: '/mocan_kitchen_astro',
 });
