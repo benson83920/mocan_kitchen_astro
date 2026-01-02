@@ -1,0 +1,36 @@
+---
+---
+<a href="#" class="fab" aria-label="Quick Contact">
+    💬
+</a>
+
+<style>
+    .fab {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        background-color: #00c300; /* LINE Green */
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.8rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        z-index: 1000;
+        transition: transform 0.3s ease;
+    }
+    
+    .fab:hover {
+        transform: scale(1.1) rotate(10deg);
+    }
+    
+    @media (min-width: 768px) {
+        .fab {
+            bottom: 30px;
+            right: 30px;
+        }
+    }
+</style>

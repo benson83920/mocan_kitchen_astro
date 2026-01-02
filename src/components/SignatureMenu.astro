@@ -1,0 +1,189 @@
+---
+import { Image } from 'astro:assets';
+import bruleeImg from '../assets/menu_brulee.png';
+import drinkImg from '../assets/menu_drink.png';
+import foodImg from '../assets/menu_food.png';
+
+const menuItems = [
+  {
+    title: "Caramel Creme Brulee",
+    price: "$6.50",
+    desc: "Silky smooth custard topped with a perfectly crisp caramelized sugar shell.",
+    img: bruleeImg,
+    tag: "Top Pick"
+  },
+  {
+    title: "Signature Latte",
+    price: "$5.00",
+    desc: "Rich espresso blended with velvety steamed milk and a touch of hazelnut.",
+    img: drinkImg,
+    tag: "Popular"
+  },
+  {
+    title: "Club Sandwich",
+    price: "$9.50",
+    desc: "Freshly handmade with premium ham, crisp lettuce, and our secret sauce.",
+    img: foodImg,
+    tag: "New"
+  }
+];
+---
+
+<section id="menu" class="menu-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Mocan's Favorites</h2>
+      <p>Handpicked selections you absolutely must try.</p>
+    </div>
+
+    <div class="menu-grid">
+      {menuItems.map(item => (
+        <div class="menu-card">
+          <div class="card-image">
+            <Image src={item.img} alt={item.title} class="food-img" />
+            {item.tag && <span class="badge">{item.tag}</span>}
+          </div>
+          <div class="card-content">
+            <div class="card-header">
+              <h3>{item.title}</h3>
+              <span class="price">{item.price}</span>
+            </div>
+            <p>{item.desc}</p>
+            <button class="order-btn">Order Now</button>
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    <div class="menu-footer">
+        <a href="#" class="view-menu-btn">👉 View Full Menu</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .menu-section {
+    padding: 5rem 0;
+    background-color: #FFFdf5; /* Slightly lighter than main bg */
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-header h2 {
+    font-size: 2.5rem;
+    color: var(--color-primary);
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .menu-card {
+    background: white;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(139, 94, 60, 0.1);
+  }
+
+  .menu-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(139, 94, 60, 0.15);
+  }
+
+  .card-image {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+  }
+
+  .food-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .menu-card:hover .food-img {
+    transform: scale(1.1);
+  }
+
+  .badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--color-accent);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .card-content {
+    padding: 1.5rem;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-header h3 {
+    font-size: 1.25rem;
+    color: var(--color-text-main);
+  }
+
+  .price {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: var(--color-accent);
+  }
+
+  .card-content p {
+    font-size: 0.95rem;
+    color: #777;
+    margin-bottom: 1.5rem;
+  }
+
+  .order-btn {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid var(--color-primary);
+    background: transparent;
+    color: var(--color-primary);
+    border-radius: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .order-btn:hover {
+    background-color: var(--color-primary);
+    color: white;
+  }
+  
+  .menu-footer {
+      text-align: center;
+      margin-top: 3rem;
+  }
+  
+  .view-menu-btn {
+      color: var(--color-primary-dark);
+      font-weight: 700;
+      font-size: 1.1rem;
+      border-bottom: 2px dashed var(--color-primary-dark);
+  }
+  
+  .view-menu-btn:hover {
+      color: var(--color-accent);
+      border-bottom-color: var(--color-accent);
+  }
+</style>
