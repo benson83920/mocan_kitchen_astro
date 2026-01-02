@@ -1,34 +1,49 @@
-name: Deploy to GitHub Pages
+name: Deploy Astro with Bun to GitHub Pages
 
 on:
-  # Trigger the workflow every time you push to the `main` branch
-  # Using a different branch name? Replace `main` with your branch’s name
+  # 當推送到 main 分支時觸發 (如果你的主分支叫 master，請自行修改)
   push:
     branches: [ main ]
-  # Allows you to run this workflow manually from the Actions tab on GitHub.
+  # 允許從 Actions 頁面手動觸發
   workflow_dispatch:
 
-# Allow this job to clone the repo and create a page deployment
+# 設定 GITHUB_TOKEN 的權限
 permissions:
   contents: read
   pages: write
   id-token: write
+
+# 只有一個併發部署，避免衝突
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout your repository using git
-        uses: actions/checkout@v5
-      - name: Install, build, and upload your site
-        uses: withastro/action@v5
-        # with:
-          # path: . # The root location of your Astro project inside the repository. (optional)
-          # node-version: 24 # The specific version of Node that should be used to build your site. Defaults to 22. (optional)
-          # package-manager: pnpm@latest # The Node package manager that should be used to install dependencies and build your site. Automatically detected based on your lockfile. (optional)
-          # build-cmd: pnpm run build # The command to run to build your site. Runs the package build script/task by default. (optional)
-        # env:
-          # PUBLIC_POKEAPI: 'https://pokeapi.co/api/v2' # Use single quotation marks for the variable value. (optional)
+        uses: actions/checkout@v4
+
+      # 安裝 Bun 環境
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      # 安裝依賴 (使用 --frozen-lockfile 確保依賴版本一致)
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # 建置專案
+      - name: Build project
+        run: bun run build
+
+      # 上傳建置產物 (預設 Astro 輸出在 dist 資料夾)
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./dist"
 
   deploy:
     needs: build
